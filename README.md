@@ -35,3 +35,8 @@ SELECT * FROM Books;
 SELECT * FROM Author
 JOIN Books
 ON Author.Author_id = Books.Author_id;   
+
+
+# Identifying Entities and relationships by ER Diagram
+<img width="1332" height="760" alt="image" src="https://github.com/user-attachments/assets/891a4a5f-8611-406f-b7a7-70050efd73aa" />
+
