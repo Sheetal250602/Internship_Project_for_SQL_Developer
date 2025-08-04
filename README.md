@@ -32,6 +32,8 @@ INSERT INTO Books Values
 
 SELECT * FROM Books;
 
+Show tables;
+
 SELECT * FROM Author
 JOIN Books
 ON Author.Author_id = Books.Author_id;   
