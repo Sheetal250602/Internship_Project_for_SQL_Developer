@@ -37,6 +37,17 @@ JOIN Books
 ON Author.Author_id = Books.Author_id;   
 
 
-# Identifying Entities and relationships by ER Diagram
+# Identifying Entities and relationships by ER Diagram.
+The steps of ER Diagram are given below:
+1. Database--> Reverse Engineering--> Next--> select database name--> Execute.
+2. In the title bar of MySQL workbench there is an option for database just click on that and there will be third option for reverse engineering just click on that and you just have to click on next button 2 times and in the third time we have to select the database name and again click on next button and after clicking 2-3 more times for next button there will be execute button just click on that and we will get EER diagram on the screen.
+
+
+ER Diagram 
 <img width="1332" height="760" alt="image" src="https://github.com/user-attachments/assets/891a4a5f-8611-406f-b7a7-70050efd73aa" />
+
+
+
+
+
 
