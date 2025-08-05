@@ -1,0 +1,48 @@
+# Task-2 Data Insertion and Handling Nulls
+# USING TABLE AUTHOR AND BOOKS WHICH WAS IN FIRST TASK(Library Database and table (Author and Bokks))
+
+# INSERTING Data in Books Table:
+
+INSERT INTO Books Values
+(1, 'Romeo And Juliet', '1597-01-01', 101),
+(2, 'Gitanjali', '1910-01-01', 102),
+(3, 'Madhushala', '1935-01-01', 103);
+
+# UPDATING DATA Books Table:
+-- Updating Title from "MADHUSHALA" to "AGNEEPATH"--
+
+UPDATE Books
+SET Title = 'Agneepath'
+WHERE Book_id = 3;
+
+# Inserting Data in Author Table:
+
+INSERT INTO Author Values
+(101, 'William', 'Shakespeare'),
+(102, 'Rabindranath', 'Tagore'),
+(103, 'Hariwanshrai', 'Bachchan');
+
+# UPDATING DATA Author Table:
+-- Updating Author's last_name From "SHAKESPEARE" to "BLAKE"--
+
+UPDATE Author
+SET last_name = 'Blake'
+WHERE Author_id = 101;
+
+# DELETING Data in Books table:
+
+DELETE FROM Books 
+WHERE Book_id = 1;
+
+# DELETEING Data in Author Table:
+
+DELETE FROM Author 
+WHERE Author_id = 101;
+
+# Handling NULL Values by Using "IS NULL" and "IS NOT NULL":
+
+SELECT * FROM Author 
+WHERE DOB IS NOT NULL;
+
+SELECT * FROM Author 
+WHERE DOB IS NULL;
