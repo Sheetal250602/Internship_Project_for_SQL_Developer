@@ -1,7 +1,7 @@
-# BASIC SELECT QUERIES.
-# Using previous tables "BOOKS" and "AUTHOR".
+# TASK-3 BASIC "SELECT" QUERIES.
+# USING TABLES AUTHOR AND BOOKS WHICH WAS IN FIRST AND SECOND TASK(Library Database and tables (Author and Books))
 
-# Extracting data from both BOOKS and AUTHOR Table:
+# Extracting data from both BOOKS and AUTHOR Tables:
 SELECT * FROM Books;
 SELECT * FROM Author;
 
