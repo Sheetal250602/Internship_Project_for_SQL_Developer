@@ -1,0 +1,113 @@
+# TASK-4 AGGREGATE FUNCTIONS AND GROUPING 
+# Using new Database 'COMPANY' and new table 'EMPLOYEES' for aggregate functions(COUNT, SUM, MIN, MAX, AVG) and filter groups using HAVING clause.
+
+CREATE DATABASE COMPANY;
+USE COMPANY;
+
+CREATE TABLE Employees(
+employee_id INT PRIMARY KEY NOT NULL,
+first_name VARCHAR(50),
+last_name VARCHAR(50),
+category VARCHAR(50),
+department VARCHAR(50),
+salary FLOAT DEFAULT 20000,
+joining_date DATE
+);
+
+INSERT INTO Employees VALUES
+(1, 'John', 'Smith', 'Full Time', 'Engineering', 80000, '2021-01-29'),
+(2, 'Alice', 'Johnson', 'Part Time', 'HR', 30000.00, '2021-05-12'),
+(3, 'Bob', 'Brown', 'Full Time', 'Finance', 90000, '2021-01-29'),
+(4, 'Carol', 'White', 'Contract', 'IT', 75000, '2021-01-01'),
+(5, 'David', 'Green', 'Full Time', 'Engineering', 85000, '2022-01-13'),
+(6, 'Emma', 'Blue', 'Part Time', 'Finance', 32000, '2023-01-01'),
+(7, 'Frank', 'Black', 'Full Time', 'HR', 60000, '2024-05-05'),
+(8, 'Grace', 'Grey', 'Full Time', 'Marketing', 70000, '2021-01-22'),
+(9, 'Henry', 'Red', 'Contract', 'Sales', 95000, '2021-01-08'),
+(10, 'Ivy', 'Yellow', 'Full Time', 'Marketing', 28000, '2025-01-03');
+
+SELECT * FROM Employees;
+
+# COUNT Function:
+SELECT COUNT(*) AS total_employees FROM Employees; 
+
+# SUM Function:
+SELECT SUM(salary) AS total_salary FROM Employees;
+
+# AVG Function:
+SELECT AVG(salary) AS average_salary FROM Employees;
+
+# MAX Function:
+SELECT MAX(salary) AS Highest_salary FROM Employees;
+
+# MIN Function:
+SELECT MIN(salary) AS Lowest_salary FROM Employees;
+
+
+
+# GROUP BY Clause with COUNT Function:
+SELECT department, COUNT(*) AS total_employees FROM employees
+GROUP BY department;
+
+# GROUP BY Clause with SUM Function:
+SELECT department, SUM(salary) FROM Employees
+GROUP BY department;
+
+# GROUP BY Clause with AVG Function:
+SELECT department, AVG(salary) FROM Employees
+GROUP BY department;
+
+# GROUP BY Clause with MIN Function:
+SELECT department, MIN(salary) FROM Employees
+GROUP BY department;
+
+# GROUP BY Clause with MAX Function:
+SELECT department, MAX(salary) FROM Employees
+GROUP BY department;
+
+
+
+# GROUP BY Clause with COUNT Function Using HAVING clause:
+SELECT department, COUNT(*) AS total_employees FROM Employees
+GROUP BY department
+HAVING department = 'Engineering';
+
+# GROUP BY Clause with AVG Function Using HAVING clause:
+SELECT category, AVG(salary) AS avg_salary FROM Employees
+GROUP BY category
+HAVING category = 'Full Time';
+
+#  GROUP BY Clause with MIN Function Using HAVING clause:
+SELECT category, MIN(salary) AS total_salary FROM Employees
+GROUP BY category
+HAVING category = 'Part Time';
+
+# GROUP BY Clause with MAX Function Using HAVING clause:
+SELECT category, MAX(salary) AS total_salary FROM Employees
+GROUP BY category
+HAVING category = 'Part Time';
+
+# GROUP BY Clause with SUM Function Using HAVING clause:
+SELECT category, SUM(salary) AS total_salary FROM Employees
+GROUP BY category
+HAVING category = 'Part Time';
+
+# Finding Number of Columns by using COUNT Function:
+SELECT COUNT(*) AS total_columns
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'Employees';
+
+# ROUND Function:
+SELECT category, ROUND(AVG(salary), 2) AS avg_salary FROM Employees
+GROUP BY category
+HAVING category = 'Full Time';
+
+
+
+
+
+
+
+
+
+
