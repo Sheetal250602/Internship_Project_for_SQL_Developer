@@ -1,0 +1,208 @@
+# TASK-5 SQL JOINS(INNER, LEFT, RIGHT, FULL JOINS)
+# Using new Database 'Ecommerce' and new tables 'CUSTOMERS', 'ORDERS' and 'PRODUCTS' for joining multiple tables using MySQL Workbench.
+
+
+CREATE DATABASE Ecommerce;
+USE Ecommerce;
+
+CREATE TABLE Customers(
+Customer_id INT PRIMARY KEY NOT NULL,
+first_name VARCHAR(50),
+last_name VARCHAR(50),
+email VARCHAR(100),
+City VARCHAR(100)
+);
+
+INSERT INTO Customers VALUES
+(1, 'Amit', 'Kumar', 'amitkumar@ecommerce.com', 'Lucknow'),
+(2, 'Ramesh', 'Khanna', 'rameshkhanna@ecommerce.com', 'Amritsar'),
+(3, 'Venkat', 'Iyer', 'venkatiyer@ecommerce.com', 'Chennai'),
+(4, 'Rahul', 'Verma', 'rahulverma@ecommerce.com', 'Rohtak'),
+(5, 'Anjali', 'Sharma', 'anjalisharma@ecommerce.com', 'Noida'),
+(6, 'Kartik', 'Malhotra', 'kartikmalhotra@ecommerce.com', 'Delhi'),
+(7, 'Kajal', 'Aggarwal', 'kajalaggrawal@ecommerce.com', 'Tamilnadu'),
+(8, 'Shashi', 'Bala', 'shashibala@ecommerce.com', 'Kanpur'),
+(9, 'Mala', 'Sinha', 'malasinha@ecommerce.com', 'Varanasi'),
+(10, 'Babita', 'Rani', 'babitarani@ecommerce.com', 'Delhi');
+
+SELECT * FROM Customers;
+
+CREATE TABLE Orders(
+Order_id INT PRIMARY KEY NOT NULL,
+order_date DATE,
+amount DECIMAL(6,2) DEFAULT 100,
+product_name VARCHAR(100),
+quantity INT,
+Customer_id INT,
+FOREIGN KEY(Customer_id) REFERENCES Customers(Customer_id)
+);
+
+INSERT INTO Orders VALUES
+(101, '2025-02-05', 500, 'Keyboard', 3, 4),
+(102, '2025-01-17', 600, 'Keyboard', 2, 3),
+(103, '2024-12-09', 1500, 'Speaker', 6, 1),
+(104, '2024-09-25', 900, 'Mouse', 3, 9),
+(105, '2025-03-07', 1900, 'Wires', 1, 7),
+(106, '2025-04-11', 2000, 'Monitor', 6, 8),
+(107, '2025-05-15', 8000, 'Printer', 9, 1),
+(108, '2025-06-13', 5000, 'Phone', 1, 6),
+(109, '2025-07-18', 200, 'Mouse', 5, 10);
+
+SELECT * FROM Orders;
+
+INSERT INTO Products VALUES
+(11, 'Electronics', 'Available', 101),
+(12, 'Electronics', 'Not Available', 106),
+(13, 'Electronics', 'Not Available', 103),
+(14, 'Electronics', 'Available', 101),
+(15, 'Electronics', 'Available' ,102);
+
+CREATE TABLE Products(
+product_id INT PRIMARY KEY NOT NULL,
+product_category VARCHAR(100),
+product_status VARCHAR(50) DEFAULT 'Available',
+order_id INT,
+FOREIGN KEY(order_id ) REFERENCES Orders(order_id)
+);
+
+SELECT * FROM Products;
+
+# JOINING 3 Tables by using INNER JOIN:
+SELECT * FROM Customers c
+INNER JOIN Orders o
+ON c.Customer_id = o.Customer_id
+INNER JOIN Products p
+ON p.order_id = o.order_id;
+
+# Joining Customers and Products Table:
+SELECT * FROM Customers c
+JOIN Products p
+ON c.Customer_id = c.Customer_id;
+
+# Joining Orders and Products Table:
+SELECT * FROM Orders o 
+JOIN Products p
+ON o.order_id = p.order_id;
+
+# Using INNER JOIN by joining Customers and Orders Table:
+SELECT * FROM Customers c
+INNER JOIN Orders o
+ON c.Customer_id = o.Customer_id;
+
+# Using LEFT JOIN by joining Customers and Orders Table::
+SELECT * FROM Customers c
+LEFT JOIN Orders o
+ON c.Customer_id = o.Customer_id;
+
+# Using RIGHT JOIN by joining Customers and Orders Table::
+SELECT * FROM Customers c
+RIGHT JOIN Orders o
+ON c.Customer_id = o.Customer_id;
+
+# Using CROSS JOIN
+SELECT * FROM Customers c
+CROSS JOIN Orders o
+ON c.Customer_id = o.Customer_id;
+
+# Using FULL JOIN by UNION by joining Customers and Orders Table::
+SELECT *
+FROM Customers c
+LEFT JOIN Orders o
+ON c.Customer_id= o.Customer_id
+UNION
+SELECT *
+FROM Customers c
+RIGHT JOIN Orders o
+ON c.Customer_id= o.Customer_id; 
+
+# Using 'WHERE' clause:
+SELECT c.first_name, c.last_name, c.customer_id, c.City FROM Customers c
+JOIN Orders o 
+ON c.Customer_id = o. Customer_id
+WHERE c.City = 'Delhi';
+
+# Using 'AND' operator:
+SELECT c.first_name, c.last_name, c.City, o.amount, o.product_name FROM Customers c
+JOIN Orders o 
+ON c.Customer_id = o. Customer_id
+WHERE c.City = 'Delhi' AND o.amount > 900;
+
+# Using 'BETWEEN' operator:
+SELECT c.first_name, c.last_name, c.City, o.amount, o.product_name FROM Customers c
+JOIN Orders o 
+ON c.Customer_id = o. Customer_id
+WHERE o.amount BETWEEN 1500 AND 8000;
+
+# Using 'LIKE' operator:
+SELECT c.first_name, c.last_name, c.City, o.amount, o.product_name FROM Customers c
+LEFT JOIN Orders o 
+ON c.Customer_id = o. Customer_id
+WHERE c.first_name LIKE 'a%';
+
+# Using 'IN' operator:
+SELECT c.first_name, c.last_name, o.amount, o.product_name FROM Customers c
+LEFT JOIN Orders o 
+ON c.Customer_id = o. Customer_id
+WHERE c.City IN ('Noida', 'Kanpur', 'Lucknow');
+
+
+# Using Aggregate Functions(COUNT, SUM, MIN, MAX, AVG):
+
+SELECT COUNT(*) AS total_customers
+FROM Customers c
+INNER JOIN Orders o
+ON c.Customer_id = o.Customer_id;
+
+SELECT SUM(o.amount) AS total_amount
+FROM Customers c
+INNER JOIN Orders o
+ON c.Customer_id = o.Customer_id;
+
+SELECT MAX(o.amount) AS maximum_amount 
+FROM Customers c
+INNER JOIN Orders o
+ON c.Customer_id = o.Customer_id;
+
+SELECT MIN(o.amount) AS minimum_amount 
+FROM Customers c
+INNER JOIN Orders o
+ON c.Customer_id = o.Customer_id;
+
+SELECT AVG(o.amount) AS avg_amount 
+FROM Customers c
+INNER JOIN Orders o
+ON c.Customer_id = o.Customer_id;
+
+
+# Using 'ORDER BY' clause and 'LIMIT' clause for finding Highest amount:
+SELECT * FROM Customers c
+JOIN Orders o 
+ON c.Customer_id = o.Customer_id
+ORDER BY o.amount desc
+LIMIT 1;
+
+# Using 'ORDER BY' clause and 'LIMIT' clause for finding Highest quantity:
+SELECT * FROM Customers c
+JOIN Orders o 
+ON c.Customer_id = o.Customer_id
+ORDER BY o.quantity desc
+LIMIT 3;
+
+# Using 'GROUP BY' clause for total amount:
+SELECT c.City, SUM(o.amount) AS total_amount 
+FROM Customers c
+INNER JOIN Orders o
+ON c.Customer_id = o.Customer_id
+GROUP BY c.City;
+
+# Using 'CROSS JOIN' by WHERE clause:
+SELECT c.customer_id, o.product_name FROM Customers c
+CROSS JOIN Orders o
+ON c.Customer_id = o.Customer_id
+WHERE c.Customer_id IN(1,4);
+
+
+
+
+
+
