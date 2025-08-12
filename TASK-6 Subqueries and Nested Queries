@@ -1,0 +1,111 @@
+# TASK-6 SUBQUERIES AND NESTED QUERIES
+# Using new Database 'COMPANY' and new tables 'EMPLOYEES' and 'DEPARTMENTS' for Subqueries and Nested Queries by using MySQL Workbench.
+
+CREATE DATABASE COMPANY;
+USE COMPANY;
+
+CREATE TABLE Employees(
+employee_id INT PRIMARY KEY NOT NULL,
+first_name VARCHAR(50),
+last_name VARCHAR(50),
+category VARCHAR(50),
+department VARCHAR(50),
+salary FLOAT DEFAULT 20000,
+joining_date DATE
+);
+
+INSERT INTO Employees VALUES
+(1, 'John', 'Smith', 'Full Time', 'Engineering', 80000, '2021-01-29'),
+(2, 'Alice', 'Johnson', 'Part Time', 'HR', 30000.00, '2021-05-12'),
+(3, 'Bob', 'Brown', 'Full Time', 'Finance', 90000, '2021-01-29'),
+(4, 'Carol', 'White', 'Contract', 'IT', 75000, '2021-01-01'),
+(5, 'David', 'Green', 'Full Time', 'Engineering', 85000, '2022-01-13'),
+(6, 'Emma', 'Blue', 'Part Time', 'Finance', 32000, '2023-01-01'),
+(7, 'Frank', 'Black', 'Full Time', 'HR', 60000, '2024-05-05'),
+(8, 'Grace', 'Grey', 'Full Time', 'Marketing', 70000, '2021-01-22'),
+(9, 'Henry', 'Red', 'Contract', 'Sales', 95000, '2021-01-08'),
+(10, 'Ivy', 'Yellow', 'Full Time', 'Marketing', 28000, '2025-01-03');
+
+SELECT * FROM Employees;
+
+CREATE TABLE Departments(
+    dept_id INT PRIMARY KEY NOT NULL,
+    department varchar(50)
+);
+
+INSERT INTO Departments VALUES
+(101, 'Engineering'),
+(102, 'HR'),
+(103, 'Finance'),
+(104, 'Marketing'),
+(105, 'Engineering'),
+(106, 'Sales'),
+(107, 'HR');
+
+SELECT * FROM Departments;
+
+# NESTED QUERY:
+SELECT first_name
+FROM employees
+WHERE department IN (SELECT department FROM Departments WHERE department = 'Engineering');
+
+# SCALAR SUBQUERY: 
+SELECT first_name, salary FROM Employees
+WHERE salary > (SELECT AVG(salary) FROM Employees);
+
+# SINGLE ROW SUBQUERY::
+SELECT * FROM Employees
+WHERE department = (SELECT department FROM Departments WHERE dept_id = '106');
+
+# MULTIPLE ROW SUBQUERY:
+SELECT * FROM Employees 
+WHERE department IN (SELECT department FROM Departments WHERE department = 'HR');
+
+# MULTIPLE COLUMN SUBQUERY:
+SELECT department, salary FROM Employees
+WHERE (department, salary) IN (SELECT department, salary FROM Employees
+WHERE salary > 60000);
+
+# Subquery with 'IN' Operator:
+SELECT * FROM Employees
+WHERE department IN (SELECT department FROM Departments);
+
+# Subquery with 'NOT IN' Operator:
+SELECT * FROM Employees
+WHERE department NOT IN (SELECT department FROM Departments);
+
+# Correlated Subquery:
+SELECT first_name, last_name, salary FROM Employees e1
+WHERE salary > (SELECT AVG(salary) from Employees e2 WHERE e2.department = e1.department);
+
+# Subquery with 'EXISTS':
+SELECT employee_id , first_name
+FROM Employees
+WHERE EXISTS (SELECT 101 FROM Departments WHERE Departments.department = Employees.department);
+
+# Subquery with 'NOT EXISTS':
+SELECT employee_id , first_name
+FROM Employees
+WHERE NOT EXISTS (SELECT 101 FROM Departments WHERE Departments.department = Employees.department);
+
+# Subquery with 'FROM' clause:
+SELECT department FROM
+(SELECT * FROM Employees) AS A;
+
+# Subquery with 'WHERE' and '=' :
+SELECT * FROM Employees
+WHERE department = (SELECT department FROM Employees WHERE department = 'Sales');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
