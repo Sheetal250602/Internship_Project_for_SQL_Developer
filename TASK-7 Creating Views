@@ -1,0 +1,85 @@
+# TASK- 7 CREATING VIEWS
+# Using Database 'COMPANY' and tables 'EMPLOYEES' and 'DEPARTMENTS' for creating 'VIEWS' by using MySQL Workbench.
+
+
+# Creating View for Single Table 'EMPLOYEES':
+CREATE VIEW EmployeesDetails AS
+SELECT * FROM Employees;
+
+SELECT * FROM EmployeesDetails;
+
+CREATE VIEW EmpDetails AS
+SELECT employee_id, first_name, last_name FROM Employees;
+
+SELECT * FROM EmpDetails;
+
+# Creating View for Single Table 'EMPLOYEES' by using ORDER BY clause:
+CREATE VIEW OrderdEmployeeDetails AS
+SELECT employee_id, first_name, last_name FROM Employees
+ORDER BY first_name;
+
+SELECT * FROM OrderedEmployeeDetails;
+
+# Creating View for Single Table 'EMPLOYEES' by using 'WHERE' clause:
+CREATE VIEW EngineeringEmployees AS
+SELECT employee_id, first_name, last_name FROM Employees
+WHERE department = 'Engineering';
+
+SELECT * FROM EngineeringEmployees;
+
+
+# Creating View for Multiple Tables 'EMPLOYEES'and 'DEPARTMENTS':
+CREATE VIEW department_id AS
+SELECT employees.first_name, employees.salary, Departments.dept_id
+FROM Employees, Departments
+WHERE Employees.department = Departments.department;
+
+SELECT * FROM department_id;
+
+# Create View with complex SELECT by using Table 'EMPLOYEES' only:
+CREATE VIEW Highestsalary AS
+SELECT *, 
+SUM(salary) AS total_salary
+FROM Employees
+GROUP BY employee_id
+HAVING SUM(salary) > 10000
+ORDER BY total_salary DESC;
+
+SELECT * FROM Highestsalary;
+
+
+# Create View with complex SELECT by using both tables 'EMPLOYEES' and 'DEPARTMENTS':
+CREATE VIEW ComplexQuery AS
+SELECT employee_id, first_name, 
+SUM(salary) AS total_salary,
+COUNT(employee_id) AS total_employees,
+AVG(salary) AS average_salary
+FROM Employees
+JOIN Departments
+ON Employees.department = Departments.department
+WHERE joining_date > '2021-01-01'
+GROUP BY employee_id
+HAVING SUM(salary) > 100000 
+ORDER BY total_salary DESC;
+
+SELECT * FROM ComplexQuery;
+
+
+# Use views for abstraction:
+CREATE VIEW HighEarningEmployees AS
+SELECT MAX(salary) as total_salary, employee_id, first_name, departmen FROM Employees
+GROUP BY employee_id
+ORDER BY MAX(salary) DESC
+LIMIT 3;
+
+SELECT * FROM HighEarningEmployees;
+
+# Use views for security View data:
+CREATE VIEW secured_data AS
+SELECT employee_id, first_name, last_name, department FROM Employees
+ORDER BY first_name;
+
+SELECT * FROM secured_data;
+
+# 'DELETING' a view table:
+DROP VIEW Employees;
